@@ -1,6 +1,6 @@
 from django.contrib import admin
 
+from .models import Parner, Product, Transaction
 # Register your models here.
-from .models import User, Parner, Product, Transaction
 
-admin.site.register([User, Parner, Product, Transaction])
+admin.site.register([Parner, Product, Transaction])
