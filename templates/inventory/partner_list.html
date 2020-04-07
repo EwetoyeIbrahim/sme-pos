@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main_page_area %}
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Relationship</th>
+        </tr>
+    </thead>
+
+    {% for partner in partner_list %}
+        <tr>
+            <td>partner.name</td>
+            <td>user.phone_number</td>
+            <td>user.email</td>
+            <td>user.relationship</td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock main_page_area %}

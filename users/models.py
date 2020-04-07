@@ -17,7 +17,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=50, blank=True)
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
-    avatar = models.ImageField(upload_to='user_avatars/', null=True, blank=True)
+    photo = models.ImageField(upload_to='user_avatars/', null=True, blank=True)
     responsible = models.CharField(max_length=100,)
     date = models.DateTimeField(default=timezone.now)
 

@@ -17,7 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name = 'inventory'
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('transactions/', views.transactions, name='transactions'), 
+    path('products/', views.ProductList.as_view(), name='product_list'),
+    path('values/', views.InventoryList.as_view(), name='inventory_list'),
+    path('employees/', views.EmployeeList.as_view(), name='employee_list'),
+    path('partners/', views.PartnerList.as_view(), name='partner_list'),
 ]

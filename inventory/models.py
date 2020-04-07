@@ -5,22 +5,26 @@ from users.models import CustomUser as User
 # Create your models here.
 
 class Parner(models.Model):
-    company_name = models.CharField(max_length=100, unique=True,)
+    name = models.CharField(max_length=100, unique=True,)
     phone_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
     mobile_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
     address = models.CharField(max_length=100, blank=True, null=True,)
     email = models.EmailField(max_length=100, unique=True, blank=True, null=True,)
     is_vendor = models.BooleanField(default=False,)
     is_customer = models.BooleanField(default=False,)
+    photo = models.ImageField(upload_to='partner_avatars/', null=True, blank=True)
     responsible = models.ForeignKey(User, on_delete=models.PROTECT,)
     date = models.DateTimeField()
 
    
 class Product(models.Model):
-    product_name = models.CharField(max_length=200, unique=True, db_index=True, help_text="Product name is required: It must be unique",)
-    product_description = models.CharField(max_length=200, db_index=True, blank=True, help_text="Optional information about the product",)
-    product_code = models.CharField(max_length=50, unique=True, db_index=True, blank=True, null=True,)
-    product_qty = models.PositiveIntegerField()
+    name = models.CharField(max_length=200, unique=True, db_index=True, help_text="Product name is required: It must be unique",)
+    description = models.CharField(max_length=200, db_index=True, blank=True, help_text="Optional information about the product",)
+    code = models.CharField(max_length=50, unique=True, db_index=True, blank=True, null=True,)
+    quantity = models.PositiveIntegerField()
+    cost = models.FloatField(default=0.00, validators=[MinValueValidator(0.00)])
+    price = models.FloatField(default=0.00, validators=[MinValueValidator(0.00)])
+    photo = models.ImageField(upload_to='product_avatars/', null=True, blank=True)
     responsible = models.ForeignKey(User, on_delete=models.PROTECT,)
     date = models.DateTimeField()
  
