@@ -22,8 +22,13 @@ app_name = 'inventory'
 urlpatterns = [
     path('', views.index, name='index'),
     path('transactions/', views.transactions, name='transactions'), 
-    path('products/', views.ProductList.as_view(), name='product_list'),
-    path('values/', views.InventoryList.as_view(), name='inventory_list'),
-    path('employees/', views.EmployeeList.as_view(), name='employee_list'),
-    path('partners/', views.PartnerList.as_view(), name='partner_list'),
+    
+    path('products/', views.ProductList.as_view(), name='product-list'),
+    path('products/add', views.ProductCreate.as_view(), name='create-product'),
+    path('products/<int:pk>/', views.ProductUpdate.as_view(), name='update-product'),
+    path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='delete-product'),
+
+    path('values/', views.InventoryList.as_view(), name='inventory-list'),
+    path('employees/', views.EmployeeList.as_view(), name='employee-list'),
+    path('partners/', views.PartnerList.as_view(), name='partner-list'),
 ]
