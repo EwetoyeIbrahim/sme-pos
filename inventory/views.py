@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-from .models import Product
+from .models import Partner, Product
 from datetime import datetime
 
 def index(request):
@@ -17,27 +17,16 @@ class ProductList(generic.ListView):
     model = Product
     context_object_name = 'product_list'
     template_name = 'inventory/product_list.html'
-    
-class InventoryList(generic.ListView):
-    model = Product
-    context_object_name = 'product_list'
-    template_name = 'inventory/inventory_list.html'
-    
-class EmployeeList(generic.ListView):
-    model = Product
-    context_object_name = 'employee_list'
-    template_name = 'inventory/user_list.html'
-    
-class PartnerList(generic.ListView):
-    model = Product
-    context_object_name = 'partner_list'
-    template_name = 'inventory/partner_list.html'
 
-class ProductCreate(LoginRequiredMixin, generic.CreateView):
+
+class Product_(LoginRequiredMixin):
     model = Product
-    fields = ['name', 'description', 'code', 'quantity',
-                'cost', 'price', 'photo',]
+    fields = ['photo', 'name', 'description', 'code', 'quantity',
+                'cost', 'price',]
     success_url = reverse_lazy('inventory:product-list')
+
+
+class ProductCreate(Product_, generic.CreateView):
     
     def form_valid(self, form):
         form.instance.responsible = self.request.user
@@ -46,14 +35,44 @@ class ProductCreate(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdate(LoginRequiredMixin, generic.UpdateView):
-    model = Product
-    fields = ['name', 'description', 'code', 'quantity',
-                'cost', 'price', 'photo',]
-    success_url = reverse_lazy('inventory:product-list')
-    
+class ProductUpdate(Product_, generic.UpdateView):
+    pass
 
-class ProductDelete(LoginRequiredMixin, generic.DeleteView):
+
+class ProductDelete(Product_, generic.DeleteView):
+    pass
+
+
+class PartnerList(generic.ListView):
     model = Product
+    context_object_name = 'partner_list'
+    template_name = 'inventory/partner_list.html'
+
+class Partner_(LoginRequiredMixin,):
+    model = Partner
+    fields = ['photo', 'name', 'description', 'code', 'quantity',
+                'cost', 'price',]
     success_url = reverse_lazy('inventory:product-list')
+
+
+class PartnerCreate(Partner_, generic.CreateView):
     
+    def form_valid(self, form):
+        form.instance.responsible = self.request.user
+        form.instance.date = datetime.now()
+
+        return super().form_valid(form)
+
+
+class PartnerUpdate(Partner_, generic.UpdateView):
+    pass
+
+
+class PartnerDelete(Partner_, generic.DeleteView):
+    pass
+
+
+class InventoryList(generic.ListView):
+    model = Product
+    context_object_name = 'product_list'
+    template_name = 'inventory/inventory_list.html'

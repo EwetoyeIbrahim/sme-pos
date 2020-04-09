@@ -13,9 +13,9 @@
 
     {% for product in product_list %}
         <tr>
-            <td>product.code</td>
-            <td>product.name</td>
-            <td>product.quantity</td>
+            <td>{{ product.code|default_if_none:"--" }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.quantity }}</td>
         </tr>
     {% endfor %}
 

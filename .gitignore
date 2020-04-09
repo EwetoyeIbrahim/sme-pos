@@ -10,3 +10,6 @@ __pycache__
 
 # Migrations
 migrations/
+
+# Unneccessary Images
+avartars/

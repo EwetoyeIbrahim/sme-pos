@@ -14,10 +14,10 @@
 
     {% for user in user_list %}
         <tr>
-            <td>user.last_name, user.first_name</td>
-            <td>user.username</td>
-            <td>user.email</td>
-            <td>user.status</td>
+            <td>{{ user.last_name }}, {{ user.first_name }}</td>
+            <td>{{ user.user_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{% if user.is_staff %}Active {% else %} In-active {% endif %}</td>
         </tr>
     {% endfor %}
 

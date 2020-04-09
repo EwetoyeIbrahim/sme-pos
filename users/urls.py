@@ -17,17 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-app_name = 'inventory'
+app_name = 'users'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('transactions/', views.transactions, name='transactions'), 
-    
-    path('products/', views.ProductList.as_view(), name='product-list'),
-    path('products/add', views.ProductCreate.as_view(), name='create-product'),
-    path('products/<int:pk>/', views.ProductUpdate.as_view(), name='update-product'),
-    path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='delete-product'),
-
-    path('values/', views.InventoryList.as_view(), name='inventory-list'),
-    path('partners/', views.PartnerList.as_view(), name='partner-list'),
+    path('', views.UserList.as_view(), name='user-list'),
 ]

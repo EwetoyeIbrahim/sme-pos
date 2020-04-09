@@ -4,7 +4,7 @@ from users.models import CustomUser as User
 
 # Create your models here.
 
-class Parner(models.Model):
+class Partner(models.Model):
     name = models.CharField(max_length=100, unique=True,)
     phone_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
     mobile_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
@@ -12,7 +12,7 @@ class Parner(models.Model):
     email = models.EmailField(max_length=100, unique=True, blank=True, null=True,)
     is_vendor = models.BooleanField(default=False,)
     is_customer = models.BooleanField(default=False,)
-    photo = models.ImageField(upload_to='partner_avatars/', null=True, blank=True)
+    photo = models.ImageField(upload_to='avatars/partners', null=True, blank=True)
     responsible = models.ForeignKey(User, on_delete=models.PROTECT,)
     date = models.DateTimeField()
 
@@ -24,7 +24,7 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField()
     cost = models.DecimalField(decimal_places=2, max_digits=11, default=0.00, validators=[MinValueValidator(0.00)])
     price = models.DecimalField(decimal_places=2, max_digits=11, default=0.00, validators=[MinValueValidator(0.00)])
-    photo = models.ImageField(upload_to='product_avatars/', null=True, blank=True)
+    photo = models.ImageField(upload_to='avatars/products', null=True, blank=True)
     responsible = models.ForeignKey(User, on_delete=models.PROTECT,)
     date = models.DateTimeField()
  
@@ -34,6 +34,6 @@ class Transaction(models.Model):
     reference = models.CharField(max_length=200)
     trade_qty = models.IntegerField(default=0)
     unit_price = models.FloatField(default=0.00, validators=[MinValueValidator(0.00)])
-    partner = models.ForeignKey(Parner, on_delete=models.PROTECT,)
+    partner = models.ForeignKey(Partner, on_delete=models.PROTECT,)
     responsible = models.ForeignKey(User, on_delete=models.PROTECT,)
     date = models.DateTimeField()
