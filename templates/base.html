@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'jquery-ui-1.12/jquery-ui.min.css' %}">
     <link rel="stylesheet" href="{% static 'datatables/datatables.min.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-5-13/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'sme-pos/css/main.css' %}">
 
     <script defer src="{% static 'bootstrap-4/js/popper.min.js' %}"></script>
     <script src="{% static 'jquery-ui-1.12/external/jquery/jquery.js' %}"></script>
@@ -37,9 +38,17 @@
                 <li class='nav-item'>
                     <a class='nav-link' href="/">Help</a>
                 </li>
-                <li class='nav-item'>
-                    <a class='nav-link' href="/">Logout</a>
-                </li>
+
+                {% if user.is_authenticated %}
+                    <li class='nav-item'>
+                        <a class='nav-link' href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class='nav-item'>
+                        <a class='nav-link' href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+
                 <li class='nav-item d-block d-md-none'>
                     <!-- Sidebar  -->
                     {% include 'sidebar.html' %}
@@ -53,7 +62,7 @@
     <!-- The main body -->
     <div class='container-fluid row pt-5'>
         <!-- Left Side bar -->
-        <div class="col-12 col-md-2  bg-secondary bg-light d-none d-md-block">
+        <div class="col-12 col-md-2  bg-secondary bg-light d-none d-md-block sidebar-container">
             <div class="mt-5">
                 <!-- Sidebar  -->
                 {% include 'sidebar.html' %}

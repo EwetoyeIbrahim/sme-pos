@@ -124,7 +124,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-print(STATICFILES_DIRS)
 
 # So that Django knows to use the new User class
 AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_REDIRECT_URL = 'inventory:index'
+LOGOUT_REDIRECT_URL = 'home'

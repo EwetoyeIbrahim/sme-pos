@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main_page_area %}
+{% if user.is_authenticated %}
+    <p>Start Selling</p>
+{% else %}
+    <p> Kindly, <a href="{% url 'login' %}">Login</a></p>
+{% endif %}
+
+{% endblock %}

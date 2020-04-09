@@ -1,0 +1,5 @@
+.sidebar-container{
+    min-height: calc(100vh - 50px);
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+}
