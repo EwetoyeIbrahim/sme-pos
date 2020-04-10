@@ -44,15 +44,15 @@ class ProductDelete(Product_, generic.DeleteView):
 
 
 class PartnerList(generic.ListView):
-    model = Product
+    model = Partner
     context_object_name = 'partner_list'
     template_name = 'inventory/partner_list.html'
 
 class Partner_(LoginRequiredMixin,):
     model = Partner
-    fields = ['photo', 'name', 'description', 'code', 'quantity',
-                'cost', 'price',]
-    success_url = reverse_lazy('inventory:product-list')
+    fields = ['photo', 'name', 'phone_number', 'mobile_number',
+                'address', 'email', 'is_vendor', 'is_customer',]
+    success_url = reverse_lazy('inventory:partner-list')
 
 
 class PartnerCreate(Partner_, generic.CreateView):

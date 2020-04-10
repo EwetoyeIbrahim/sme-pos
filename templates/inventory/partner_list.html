@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main_page_area %}
+<h3 class="page-header">Partners List</h3>
 <table id="myTable" class="table table-striped table-bordered table-responsive">
 
     <thead>
@@ -14,10 +15,17 @@
 
     {% for partner in partner_list %}
         <tr>
-            <td>partner.name</td>
-            <td>user.phone_number</td>
-            <td>user.email</td>
-            <td>user.relationship</td>
+            <td><a href="{% url 'inventory:partner-update' partner.id %}">{{ partner.name }}</a></td>
+            <td>{{ partner.phone_number }}</td>
+            <td>{{ partner.email }}</td>
+            <td>
+                {% if partner.is_vendor %}
+                    <span class="badge badge-pill badge-light">Vendor</span>
+                {% endif %} 
+                {% if partner.is_customer %}
+                    <span class="badge badge-pill badge-dark">Customer</span>
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
 

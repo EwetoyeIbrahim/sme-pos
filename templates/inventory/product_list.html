@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main_page_area %}
+<h3 class="page-header">Products List</h3>
 <table id="myTable" class="table table-striped table-bordered table-responsive">
 
     <thead>
@@ -14,8 +15,8 @@
 
     {% for product in product_list %}
         <tr>
+            <td><a href="{% url 'inventory:product-update' product.id %}">{{ product.name }}</a></td>
             <td>{{ product.code|default_if_none:"--" }}</td>
-            <td>{{ product.name }}</td>
             <td>{{ product.cost }}</td>
             <td>{{ product.price }}</td>
         </tr>
