@@ -1,24 +1,24 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
+from .models import CustomUser as User
 
-from .models import CustomUser
-# Create your views here.
+class User_(PermissionRequiredMixin):
+    model = User
+    permission_required = ('users.add_user')
+    fields = ['photo', 'email', 'user_name', 'first_name', 'last_name',
+                'phone_number', 'address', 'is_staff', 'is_active',]
+    template_name = 'users/user_form.html'
+    success_url = reverse_lazy('users:user-list')
 
 
-
-class UserList(generic.ListView):
-    model = CustomUser
+class UserList(User_, generic.ListView):
+    permission_required = ('users.view_user')
     context_object_name = 'user_list'
     template_name = 'users/user_list.html'
-
-
-class User_(LoginRequiredMixin,):
-    model = CustomUser
-    fields = ['photo', 'name', 'description', 'code', 'quantity',
-                'cost', 'price',]
-    success_url = reverse_lazy('users:user-list')
 
 
 class UserCreate(User_, generic.CreateView):

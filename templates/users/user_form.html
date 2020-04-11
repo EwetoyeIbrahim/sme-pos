@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main_page_area %}
+<h3 class="page-header">Add a User</h3>
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+
+{% endblock main_page_area %}
