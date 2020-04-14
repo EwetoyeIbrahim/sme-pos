@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block main_page_area %}
+    <div class="row">
+        <div class="col-md-3 pb-2">
+            <p>Selling to:</p>
+        
+            <select class='fstdropdown-select' id="inputGroupSelect01" data-placeholder="Start typing">
+                <option value="">Select option</option>
+                {% for item in products %}
+                <option value="{{item.name}}">{{ item.name }}</option>
+                {% endfor %}
+            </select>
+        
+        </div>
+  
+        
+        <div class="col-9 col-md-7">
+            <span class="text-secondary">Select product by</span>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-sm btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Name
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Code
+                </label>
+            </div>
+
+
+            <form id="cart-form" class="form-group pt-2" onsubmit="rowAdder(); return false;">
+                <div class="pb-3"> 
+                    <select name='prod-select' class='fstdropdown-select' data-placeholder="Start typing">
+                        <option value="">Select option</option>
+                        {% for item in products %}
+                        {{item}}
+                            <option value="{{item.pk}}" prod_sku="{{item.code}}" prod_name="{{item.name}}" 
+                                prod_max_qty="{{item.quantity}}" prod_std_price="{{item.unit_price}}"
+                                prod_photo="{{item.photo}}">{{item.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    <!--input type="text" class="form-control" placeholder="Enter Product" name="product_name_code"> </div-->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-inline">
+                            <input type="number" class="form-control col-6" id="input_qty" placeholder="Qty" required="required">
+                            <input type="number" class="form-control col-6" id="input_price" placeholder="Unit Price" required="required">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-3 col-md-2">
+        
+            <img class="card image-responsive" style="height: 100px; width: auto;" src="download-2.jpg" alt="Card image cap">
+        
+        </div>
+    </div>
+
+    <table id="myTable" class="table table-striped table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+                <th> </th>
+            </tr>
+        </thead>
+
+        <!-- Area will be populated during issuing -->
+
+    </table>
+    <br>
+
+    <button class="btn btn-md btn-success">Validate</button>
+
+    <button class="btn btn-danger">Discard</button>
+
+{% endblock main_page_area %}
+
+{% block bottom_styles_and_scripts %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'fstdropdown/fstdropdown.css' %}">
+    
+    <script src="{% static 'js/transact_in.js' %}"></script>
+    <script src="{% static 'fstdropdown/fstdropdown.js' %}"></script>
+{% endblock bottom_styles_and_scripts %}

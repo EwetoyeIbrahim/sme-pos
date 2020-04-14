@@ -21,7 +21,8 @@ app_name = 'inventory'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('transactions/', views.transactions, name='transactions'), 
+    path('transactions/', views.transactions, name='transactions'),
+    path('sell/', views.IssueProduct.as_view(), name='issue-product'),
     
     path('products/', views.ProductList.as_view(), name='product-list'),
     path('products/add', views.ProductCreate.as_view(), name='product-add'),

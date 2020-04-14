@@ -79,3 +79,11 @@ class PartnerDelete(Partner_, generic.DeleteView):
 class InventoryList(Partner_, generic.ListView):
     context_object_name = 'product_list'
     template_name = 'inventory/inventory_list.html'
+
+
+class IssueProduct(PermissionRequiredMixin, generic.ListView):
+    model = Product
+    permission_required = ('inventory.add_product')
+    fields = ['photo', 'name', 'code', 'quantity', 'price',]
+    context_object_name = 'products'
+    template_name = 'inventory/transact_in.html'
