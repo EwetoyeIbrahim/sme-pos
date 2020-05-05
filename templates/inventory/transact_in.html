@@ -5,17 +5,16 @@
         <div class="col-md-3 pb-2">
             <p>Selling to:</p>
         
-            <select class='fstdropdown-select' id="inputGroupSelect01" data-placeholder="Start typing">
+            <select class='fstdropdown-select partner-select' id="inputGroupSelect01" data-placeholder="Start typing">
                 <option value="">Select option</option>
-                {% for item in products %}
-                <option value="{{item.name}}">{{ item.name }}</option>
+                {% for item in customers %}
+                <option value="{{item.id}}">{{ item.name }}</option>
                 {% endfor %}
             </select>
-        
         </div>
   
         
-        <div class="col-9 col-md-7">
+        <div class="col-9 col-md-7">    
             <span class="text-secondary">Select product by</span>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-sm btn-secondary active">
@@ -29,12 +28,12 @@
 
             <form id="cart-form" class="form-group pt-2" onsubmit="rowAdder(); return false;">
                 <div class="pb-3"> 
-                    <select name='prod-select' class='fstdropdown-select' data-placeholder="Start typing">
+                    <select onchange="selectedData()" name='prod-select' class='fstdropdown-select' data-placeholder="Start typing">
                         <option value="">Select option</option>
                         {% for item in products %}
                         {{item}}
                             <option value="{{item.pk}}" prod_sku="{{item.code}}" prod_name="{{item.name}}" 
-                                prod_max_qty="{{item.quantity}}" prod_std_price="{{item.unit_price}}"
+                                prod_max_qty="{{item.quantity}}" prod_std_price="{{item.price}}"
                                 prod_photo="{{item.photo}}">{{item.name}}</option>
                         {% endfor %}
                     </select>
@@ -44,10 +43,10 @@
                     <div class="col-8">
                         <div class="form-inline">
                             <input type="number" class="form-control col-6" id="input_qty" placeholder="Qty" required="required">
-                            <input type="number" class="form-control col-6" id="input_price" placeholder="Unit Price" required="required">
+                            <input type="number" step='0.01' class="form-control col-6" id="input_price" placeholder="Unit Price" required="required">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button id="addRow" type="submit" class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
                 </div>
             </form>
         </div>
@@ -59,33 +58,112 @@
         </div>
     </div>
 
-    <table id="myTable" class="table table-striped table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>SKU</th>
-                <th>Name</th>
-                <th>Qty</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
-                <th> </th>
-            </tr>
-        </thead>
+    <form>
+        <table id="myTable" class="display table table-striped table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Amount</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
 
-        <!-- Area will be populated during issuing -->
-
-    </table>
+            <!-- Area will be populated during issuing -->
+            
+            </tbody>
+        </table>
+    
     <br>
 
-    <button class="btn btn-md btn-success">Validate</button>
+    <button class="btn btn-md btn-success" type="button" id="sales_validate">Validate</button>
 
-    <button class="btn btn-danger">Discard</button>
+    <button class="btn btn-danger" type="button">Discard</button>
+    
+    </form>
+
+
+    <div class="dt-buttons"><button class="dt-button buttons-print" tabindex="0" aria-controls="myTable" type="button" onclick="printJS('myTable', 'html')"><span>Print</span></button> </div>
+
 
 {% endblock main_page_area %}
 
-{% block bottom_styles_and_scripts %}
+{% block additional_bottom_styles_and_scripts %}
     {% load static %}
+    <script>
+        /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+        */
+    $("#sales_validate").click(function () {
+        
+        var partner = $('.partner').text();
+
+        /*
+        Stop further execution if
+            1. partner is not selected
+            2. There is no row in the table body
+        */
+        if (partner=='' && $('#myTable tbody tr')==undefined) {
+            alert("Error: Missing Partner or Product");
+            return false; };
+
+        console.log(partner);
+        var prod_list=[]
+        var trade_qty_list=[]
+        var unit_price_list=[]
+
+        $('#myTable tbody tr').each(function(){
+
+            var prod_id = $(this).find("td:eq(1)").attr("id"); // get current row 2nd TD
+            prod_list = prod_list.concat(prod_id);
+            //console.log(prod_list);
+            var trade_qty = $(this).find("td:eq(2)").text(); // get current row 3rd TD
+            trade_qty_list=trade_qty_list.concat(trade_qty)
+            //console.log(trade_qty_list);
+            var unit_price=$(this).find("td:eq(3)").text(); // get current row 4th TD
+            unit_price_list=unit_price_list.concat(unit_price)
+            //console.log(unit_price_list);
+            
+        })
+        //console.log(prod_list);
+        //console.log(trade_qty_list);
+        //console.log(unit_price_list);
+        data = {'partner' : partner,
+                'prod_id_list' : prod_list,
+                'trade_qty_list' : trade_qty_list,
+                'unit_price_list' : unit_price_list};
+        console.log(data);
+        $.ajax({
+            headers: { "X-CSRFToken": '{{csrf_token}}' },
+            type: 'POST',
+            url: "/inventory/transact_api/",
+            data: data,
+            dataType: 'json',
+            success: function (response) {
+                // on successfull creating object
+                alert("Successfully Validated");
+
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert("Error during validation");
+            }
+        })
+
+        return false; // Prevent reload
+    
+    })
+    </script>
     <link rel="stylesheet" href="{% static 'fstdropdown/fstdropdown.css' %}">
     
     <script src="{% static 'js/transact_in.js' %}"></script>
+    <script src="{% static 'js/print.min.css' %}"></script>
+    <script src="{% static 'js/print.min.js' %}"></script>
+    
     <script src="{% static 'fstdropdown/fstdropdown.js' %}"></script>
-{% endblock bottom_styles_and_scripts %}
+{% endblock additional_bottom_styles_and_scripts %}

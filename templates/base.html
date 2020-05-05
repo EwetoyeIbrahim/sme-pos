@@ -8,14 +8,9 @@
     
     <link rel="stylesheet" href="{% static 'bootstrap-4/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'jquery-ui-1.12/jquery-ui.min.css' %}">
-    <link rel="stylesheet" href="{% static 'datatables/datatables.min.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-5-13/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'sme-pos/css/main.css' %}">
 
-    <script defer src="{% static 'bootstrap-4/js/popper.min.js' %}"></script>
-    <script src="{% static 'jquery-ui-1.12/external/jquery/jquery.js' %}"></script>
-    <script src="{% static 'bootstrap-4/js/bootstrap.min.js' %}"></script>    
-    <script defer src="{% static 'datatables/datatables.min.js' %}"></script>
 </head>
 <body>
     
@@ -80,8 +75,22 @@
         </div>
     </div>
 
-    {% block bottom_styles_and_scripts %}
-    {% endblock bottom_styles_and_scripts %}
+    <!-- Global scripts -->
+    <script defer src="{% static 'bootstrap-4/js/popper.min.js' %}"></script>
+    <script src="{% static 'jquery-ui-1.12/external/jquery/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'sme-pos/js/csrf.js' %}"></script>
+    <!-- End of global scripts -->
+
+    {% block additional_bottom_styles_and_scripts %}
+    <link rel="stylesheet" href="{% static 'datatables/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'datatables/buttons.datatables.min.css' %}">
+    
+    <script defer src="{% static 'datatables/jquery.datatables.min.js' %}"></script>
+    <script defer src="{% static 'datatables/dataTables.buttons.min.js' %}"></script>
+    <script defer src="{% static 'datatables/buttons.print.min.js' %}"></script>
+    
+    {% endblock additional_bottom_styles_and_scripts %}
     
 </body>
 </html>
