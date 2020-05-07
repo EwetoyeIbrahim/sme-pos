@@ -88,9 +88,12 @@ class TransactionList(SearchableListView):
     model = Transaction
     template_name = "inventory/transaction_list.html"
     paginate_by = 10
-    searchable_fields = ["product__name"]
+    searchable_fields = ["product__name", "partner__name", "reference"]
     specifications = {
-    }
+        "product__name": "__icontains",
+        "partner__name": "__icontains",
+        "reference": "__icontains",
+        }
     '''model = Transaction
     context_object_name = 'transaction_list'
     #permission_required = ('inventory.view_transaction')

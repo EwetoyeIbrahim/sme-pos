@@ -56,6 +56,7 @@ class SearchableListView(ListView):
                 continue
             for field in value["fields"]:
                 formfield = get_formfield(model, field)
+                formfield.required = False  # all search fields should be optional
                 formfield.widget.attrs.update({'class': self.css_class})
                 form.fields.update({
                     field : formfield

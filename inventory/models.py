@@ -5,7 +5,7 @@ from users.models import CustomUser as User
 # Create your models here.
 
 class Partner(models.Model):
-    name = models.CharField(max_length=100, unique=True,)
+    name = models.CharField(max_length=100, unique=True, verbose_name="Partner name",)
     phone_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
     mobile_number = models.CharField(max_length=100, unique=True, blank=True, null=True,)
     address = models.CharField(max_length=100, blank=True, null=True,)
@@ -18,7 +18,7 @@ class Partner(models.Model):
 
    
 class Product(models.Model):
-    name = models.CharField(max_length=200, unique=True, db_index=True, help_text="Product name is required: It must be unique",)
+    name = models.CharField(max_length=200, unique=True, db_index=True, verbose_name="Product name",)
     description = models.CharField(max_length=200, db_index=True, blank=True, help_text="Optional information about the product",)
     code = models.CharField(max_length=50, unique=True, db_index=True, blank=True, null=True,)
     quantity = models.PositiveIntegerField()
