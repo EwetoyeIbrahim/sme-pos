@@ -1,0 +1,21 @@
+<div class="row col-sm-12" id="paginator">
+    <div class="text-center">
+        <ul class="pagination">
+            {% for i in paginator.page_range %}
+            {% if i == page_obj.number %}
+            <li class="active btn-sm btn-secondary mr-2"><a class="text-light" href="#" onclick="change_page({{i}})" rel="{{ i }}">{{ i }}</a></li>
+            {% else %}
+            <li class="btn-sm btn-secondary mr-2"><a class="text-light" href="#" onclick="change_page({{i}})" rel="{{ i }}">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% if search_size and not disable_search_button %}
+        <div class="inline-form pull-right pagination">
+            <button class="btn" onclick="toggle_search_box()"><i class="fa fa-search"></i></button>
+        </div>
+        {% endif %}
+    </div>
+    {# hidden input to keep the page number #}
+    {{ search_page }}
+</div>
+

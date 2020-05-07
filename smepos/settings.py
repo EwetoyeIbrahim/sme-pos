@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # personal
     'users.apps.UsersConfig',
     'inventory.apps.InventoryConfig',
+
+    #Third party
+    'search_listview',
 ]
 
 MIDDLEWARE = [

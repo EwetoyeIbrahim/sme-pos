@@ -15,11 +15,10 @@ import json
 from .models import Partner, Product, Transaction
 from datetime import datetime
 
+from search_listview.list import SearchableListView
+
 def index(request):
     return HttpResponse("You will see all products here")
-
-def transactions(request):
-    return HttpResponse("You will see all and product specific transactions here")
 
 
 class Product_(PermissionRequiredMixin):
@@ -82,6 +81,29 @@ class PartnerUpdate(Partner_, generic.UpdateView):
 
 class PartnerDelete(Partner_, generic.DeleteView):
     pass
+
+
+#class TransactionList(generic.ListView):
+class TransactionList(SearchableListView):
+    model = Transaction
+    template_name = "inventory/transaction_list.html"
+    paginate_by = 10
+    searchable_fields = ["product__name"]
+    specifications = {
+    }
+    '''model = Transaction
+    context_object_name = 'transaction_list'
+    #permission_required = ('inventory.view_transaction')
+    template_name = 'inventory/transaction_list.html'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = self.model.objects.filter(name__icontains=query)
+        else:
+            object_list = self.model.objects.all()
+        return object_list
+    '''
 
 
 class InventoryList(Partner_, generic.ListView):
