@@ -83,8 +83,8 @@ function selectedData() {
         .options[cart_form.elements["prod-select"].selectedIndex];
     input_price.value = prod_obj.getAttribute("prod_std_price");
     input_qty.value = "";
-    input_qty.placeholder = prod_obj.getAttribute("prod_max_qty")+" Available";
-    //input_qty.value = "";
+    input_qty.max = prod_obj.getAttribute("prod_max_qty");
+    input_qty.placeholder = input_qty.max+" Available";
 }
 
 function printData()

@@ -3,7 +3,7 @@
 {% block main_page_area %}
     <div class="row">
         <div class="col-md-3 pb-2">
-            <p>Selling to:</p>
+            <p class="text-secondary">Selling to:</p>
         
             <select class='fstdropdown-select partner-select' id="inputGroupSelect01" data-placeholder="Start typing">
                 <option value="">Select option</option>
@@ -15,18 +15,14 @@
   
         
         <div class="col-9 col-md-7">    
-            <span class="text-secondary">Select product by</span>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-sm btn-secondary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Name
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> Code
-                </label>
+            <span class="text-secondary">Input product details</span>
+
+            <!-- The Alerts -->
+            <div class="pt-3">
+            {% include "inventory/alerts.html" %}
             </div>
 
-
-            <form id="cart-form" class="form-group pt-2" onsubmit="rowAdder(); return false;">
+            <form id="cart-form" class="form-group" onsubmit="rowAdder(); return false;">
                 <div class="pb-3"> 
                     <select onchange="selectedData()" name='prod-select' class='fstdropdown-select' data-placeholder="Start typing">
                         <option value="">Select option</option>
@@ -34,7 +30,7 @@
                         {{item}}
                             <option value="{{item.pk}}" prod_sku="{{item.code}}" prod_name="{{item.name}}" 
                                 prod_max_qty="{{item.quantity}}" prod_std_price="{{item.price}}"
-                                prod_photo="{{item.photo}}">{{item.name}}</option>
+                                prod_photo="{{item.photo}}">{{item.name}} [{{item.code}}]</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -81,7 +77,7 @@
 
     <button class="btn btn-md btn-success" type="button" id="sales_validate">Validate</button>
 
-    <button class="btn btn-danger" type="button">Discard</button>
+    <button class="btn btn-danger" type="button" id="discard-cart">Discard</button>
     
     </form>
 
@@ -101,15 +97,15 @@
         */
     $("#sales_validate").click(function () {
         
-        var partner = $('.partner').text();
+        var partner = $('.partner-select').val();
 
         /*
         Stop further execution if
             1. partner is not selected
             2. There is no row in the table body
         */
-        if (partner=='' && $('#myTable tbody tr')==undefined) {
-            alert("Error: Missing Partner or Product");
+        if (partner=='' || $('#myTable tbody tr').length==0) {
+            $("#empty-partner-product-alert").removeClass('d-none');
             return false; };
 
         console.log(partner);
@@ -145,19 +141,22 @@
             data: data,
             dataType: 'json',
             success: function (response) {
-                // on successfull creating object
-                alert("Successfully Validated");
-
+                $("#validate-success-alert").removeClass('d-none');
             },
             error: function (response) {
-                // alert the error if any error occured
-                alert("Error during validation");
+                $("#validate-fail-alert").removeClass('d-none');
             }
         })
 
         return false; // Prevent reload
     
-    })
+    });
+
+    $("#discard-cart").click(function() {
+        // Cart items are discarded by reloading the page
+        location.reload(true);   
+    });
+    
     </script>
     <link rel="stylesheet" href="{% static 'fstdropdown/fstdropdown.css' %}">
     

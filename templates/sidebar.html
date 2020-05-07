@@ -1,7 +1,7 @@
 Quick Links
 <ul class="list-group">
     <li class="list-group-item mt-2">
-        <a href="/"><i class="fas fa-shopping-cart mr-2"></i>Shop</a>
+        <a href="{% url 'inventory:issue-products' %}"><i class="fas fa-shopping-cart mr-2"></i>Shop</a>
     </li>
 
     <li class="list-group-item mt-3">
@@ -17,7 +17,7 @@ Quick Links
         <ul class="list-unstyled pl-4">
             <li><a href="/"><i class="fas fa-truck-moving mr-2"></i>Receive</a></li>
             <li><a href="{% url 'inventory:inventory-list' %}"><i class="fas fa-coins mr-2"></i>Values</a></li>
-            <li><a href="/"><i class="fas fa-exchange-alt mr-2"></i>Transactions</a></li>
+            <li><a href="{% url 'inventory:transactions' %}"><i class="fas fa-exchange-alt mr-2"></i>Transactions</a></li>
         </ul>
     </li>
 

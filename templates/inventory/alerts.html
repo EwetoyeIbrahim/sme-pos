@@ -1,0 +1,24 @@
+<!-- successful validation-->
+<div id="validate-success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+    <strong>Successfully validated!</strong>Ref__ 
+    <button type="button" class="btn btn-success btn-sm ml-2">Print Receipt</button>
+    <button type="button" class="close" onclick="$('#validate-success').addClass('d-none');">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- failed validation-->
+<div id="validate-fail-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+    <strong>Not validated!</strong> Please go through the form to remove invalid lines
+    <button type="button" class="close" onclick="$('#validate-fail-alert').addClass('d-none');">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- invalid partner or product -->
+<div id="empty-partner-product-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+    <strong>Invalid data </strong> Please select a partner and product(s)
+    <button type="button" class="close" onclick="$('#empty-partner-product-alert').addClass('d-none');">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
