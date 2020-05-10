@@ -2,12 +2,13 @@
 
 {% block main_page_area %}
     <div class="row">
+        <div class="col-12"><h2>{{other_params.trigger|capfirst}} Point</h2></div>
         <div class="col-md-3 pb-2">
-            <p class="text-secondary">Selling to:</p>
+            <p class="text-secondary">Partner name:</p>
         
             <select class='fstdropdown-select partner-select' id="inputGroupSelect01" data-placeholder="Start typing">
                 <option value="">Select option</option>
-                {% for item in customers %}
+                {% for item in other_params.partners %} <!--Type provided from backend-->
                 <option value="{{item.id}}">{{ item.name }}</option>
                 {% endfor %}
             </select>
@@ -30,7 +31,7 @@
                         {{item}}
                             <option value="{{item.pk}}" prod_sku="{{item.code}}" prod_name="{{item.name}}" 
                                 prod_max_qty="{{item.quantity}}" prod_std_price="{{item.price}}"
-                                prod_photo="{{item.photo}}">{{item.name}} [{{item.code}}]</option>
+                                prod_photo="{{item.photo}}" prod_std_cost="{{item.cost}}">{{item.name}} [{{item.code}}]</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -129,7 +130,9 @@
         //console.log(prod_list);
         //console.log(trade_qty_list);
         //console.log(unit_price_list);
-        data = {'partner' : partner,
+        data = {
+                'trigger': '{{other_params.trigger}}',
+                'partner' : partner,
                 'prod_id_list' : prod_list,
                 'trade_qty_list' : trade_qty_list,
                 'unit_price_list' : unit_price_list};
@@ -156,6 +159,26 @@
         // Cart items are discarded by reloading the page
         location.reload(true);   
     });
+
+
+    function selectedData() {
+        // This function adds new row(s) to the table
+        var input_qty = document.getElementById("input_qty");
+        var input_price = document.getElementById("input_price");
+        //var row = table.insertRow(-1);
+        cart_form = document.forms["cart-form"];
+        prod_obj = cart_form.elements["prod-select"]
+            .options[cart_form.elements["prod-select"].selectedIndex];
+        input_qty.value = "";
+        
+        if ('{{other_params.trigger}}'== 'issuing') {
+            input_price.value = prod_obj.getAttribute("prod_std_price");
+            input_qty.max = prod_obj.getAttribute("prod_max_qty");
+            input_qty.placeholder = input_qty.max+" Available";
+        } else {
+            input_price.value = prod_obj.getAttribute("prod_std_cost");
+        }
+    }
     
     </script>
     <link rel="stylesheet" href="{% static 'fstdropdown/fstdropdown.css' %}">

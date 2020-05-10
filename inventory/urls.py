@@ -21,16 +21,16 @@ app_name = 'inventory'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('transactions/', views.TransactionList.as_view(), name='transactions'),
-    path('sell/', views.IssueProduct.as_view(), name='issue-products'),
+    path('issuing/', views.IssueProduct.as_view(), name='issue-products'),
+    path('receiving/', views.ReceiveProduct.as_view(), name='receive-products'),
     path('transact_api/', views.transact_api, name='transact-api'),
+    path('transactions/', views.TransactionList.as_view(), name='transactions'),
+    path('values/', views.InventoryList.as_view(), name='inventory-list'),
 
     path('products/', views.ProductList.as_view(), name='product-list'),
     path('products/add', views.ProductCreate.as_view(), name='product-add'),
     path('products/<int:pk>/', views.ProductUpdate.as_view(), name='product-update'),
     path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='product-delete'),
-
-    path('values/', views.InventoryList.as_view(), name='inventory-list'),
 
     path('partners/', views.PartnerList.as_view(), name='partner-list'),
     path('partners/add', views.PartnerCreate.as_view(), name='partner-add'),

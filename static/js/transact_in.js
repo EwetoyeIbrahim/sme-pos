@@ -73,20 +73,6 @@ var i = r.parentNode.parentNode.rowIndex;
 document.getElementById("myTable").deleteRow(i);
 }
 
-function selectedData() {
-    // This function adds new row(s) to the table
-    var input_qty = document.getElementById("input_qty");
-    var input_price = document.getElementById("input_price");
-    //var row = table.insertRow(-1);
-    cart_form = document.forms["cart-form"];
-    prod_obj = cart_form.elements["prod-select"]
-        .options[cart_form.elements["prod-select"].selectedIndex];
-    input_price.value = prod_obj.getAttribute("prod_std_price");
-    input_qty.value = "";
-    input_qty.max = prod_obj.getAttribute("prod_max_qty");
-    input_qty.placeholder = input_qty.max+" Available";
-}
-
 function printData()
 {
    var divToPrint=document.getElementById("myTable");
