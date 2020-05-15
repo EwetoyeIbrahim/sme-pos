@@ -8,16 +8,10 @@ from django.utils import timezone
 from django.db.models import Sum ,Max , F, FloatField
 from django.db import transaction
 from django.http import HttpResponse
-#from django.core import serializers
-
 from django import forms
 
-import json
-
-from .models import Partner, Product, Transaction
-from datetime import datetime
-
 from search_listview.list import SearchableListView
+from .models import Partner, Product, Transaction
 
 def index(request):
     return HttpResponse("You will see all products here")
@@ -41,8 +35,7 @@ class ProductCreate(Product_, generic.CreateView):
     
     def form_valid(self, form):
         form.instance.responsible = self.request.user
-        form.instance.date = datetime.now()
-
+        form.instance.date = timezone.now()
         return super().form_valid(form)
 
 
@@ -72,7 +65,7 @@ class PartnerCreate(Partner_, generic.CreateView):
     
     def form_valid(self, form):
         form.instance.responsible = self.request.user
-        form.instance.date = datetime.now()
+        form.instance.date = timezone.now()
 
         return super().form_valid(form)
 
